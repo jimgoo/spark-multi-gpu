@@ -17,39 +17,6 @@ import torch.autograd as autograd
 
 import common
 
-
-# class LSTM(nn.Module):
-#     def __init__(self, n_features, hidden_size, n_layers=1, use_cuda=True):
-#         super(LSTM, self).__init__()
-#         self.n_features = n_features
-#         self.hidden_size = hidden_size
-#         self.n_layers = n_layers
-#         self.use_cuda = use_cuda
-
-#         self.lstm = nn.RNN(n_features, hidden_size, n_layers, batch_first=True)
-#         self.hidden2pred = nn.Linear(hidden_size, 1)
-
-#     def init_state(self, batch_size):
-#         # initial hidden state
-#         h0 = torch.zeros(self.n_layers, batch_size, self.hidden_size)
-#         # initial cell state
-#         c0 = torch.zeros(self.n_layers, batch_size, self.hidden_size)
-#         if self.use_cuda:
-#             h0 = h0.cuda()
-#             c0 = c0.cuda()
-
-#         h0 = autograd.Variable(h0)
-#         c0 = autograd.Variable(c0)
-#         return h0 #, c0)
-
-#     def forward(self, features):
-#         batch_size = features.size(0)
-#         initial_state = self.init_state(batch_size)
-#         output, state = self.lstm(features, initial_state)
-#         # Decode hidden state of last time step
-#         pred = F.sigmoid(self.hidden2pred(output[:,-1,:]))
-#         return pred
-
 class RNN(nn.Module):
     def __init__(self, n_features, hidden_size, n_layers=1, use_cuda=True):
         super(RNN, self).__init__()
