@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-MIN_GPUS=1
+MIN_GPUS=8
 MAX_GPUS=8
 EPOCHS=10
 

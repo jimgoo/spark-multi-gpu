@@ -86,13 +86,6 @@ def make_parallel(model, device_ids):
         return Model(input=model.inputs, output=merged)
 
 
-def get_stop(n_obs, batch_size_per_gpu):
-    # Remove last partial batch so that make_parallel doesn't fail (floor!).
-    n_batches = int(np.floor(n_obs / float(batch_size_per_gpu)))
-    n_obs = n_batches * batch_size_per_gpu
-    return n_obs
-
-
 def train(n_gpus=1, epochs=10, batch_size_per_gpu=128, backend='tensorflow'):
 
     device_ids = list(range(n_gpus))
@@ -110,11 +103,11 @@ def train(n_gpus=1, epochs=10, batch_size_per_gpu=128, backend='tensorflow'):
     x_train, y_train = common.load_test_data()
 
     # Remove last partial batch so that make_parallel doesn't fail (floor!).
-    # n_batches = int(np.floor(len(x_train) / float(batch_size)))
-    # stop = n_batches * batch_size
-    # print('stop', stop)
-    # x_train = x_train[:stop]
-    # y_train = y_train[:stop]
+    n_batches = int(np.floor(len(x_train) / float(batch_size)))
+    stop = n_batches * batch_size
+    print('stop', stop)
+    x_train = x_train[:stop]
+    y_train = y_train[:stop]
 
     model = Sequential()
     model.add(SimpleRNN(hidden_size, input_shape=(n_steps, n_features), 
